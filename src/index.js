@@ -1,6 +1,6 @@
 'use strict';
 
-import Yui from "./yui";
+import Yui from "./yui.js";
 
 if (!global.Yui) {
     global.Yui = Yui;

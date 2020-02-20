@@ -1,7 +1,7 @@
 'use strict';
 
-import Watcher from "./Watcher";
-import Dep from "./Dep";
+import Watcher from "./Watcher.js";
+import Dep from "./Dep.js";
 
 export default class Yui {
     constructor(options) {

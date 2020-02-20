@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+    <title>Yui example</title>
+    <link rel="stylesheet" href="https://c.bunnies.cc/src/cappuccino.css">
+    <style>
+        .input-group {
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .bcu.btn {
+            margin: 0.2rem;
+        }
+
+        .bcu.checkbox,
+        .bcu.radio,
+        .bcu.switch {
+            margin: 0.2rem 1.2rem 0.2rem 0.2rem;
+        }
+
+        .txt-inline {
+            display: inline-block;
+            width: 200px;
+            margin: 0.2rem 1.2rem 0.2rem 0.2rem;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="input-group">Calc: {{ msg }}</div>
+    <div class="input-group">
+        <input type="text" class="bcu input" placeholder="default" v-model="msg">
+    </div>
+    <div class="input-group">
+        <input type="text" class="bcu input round" placeholder="default" v-model="msg">
+    </div>
+    <div class="input-group">
+        <div class="bcu switch default">
+            <input type="checkbox" id="sw000" v-model="o">
+            <label for="sw000">联动</label>
+        </div>
+        <div class="bcu checkbox default">
+            <input type="checkbox" id="sw001" v-model="o">
+            <label for="sw001">联动</label>
+        </div>
+        <div class="bcu checkbox default">
+            <input type="checkbox" id="sw002" v-model="o">
+            <label for="sw002">联动</label>
+        </div>
+    </div>
+</div>
+<script type="module">
+    import Yui from "../src/Yui.js";
+
+    window.a = new Yui({
+        el: '#app',
+        data: {
+            msg: 'Hello World',
+            o: true,
+        }
+    });
+</script>
+</body>
+</html>

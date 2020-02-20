@@ -1,6 +1,6 @@
 'use strict';
 
-import Dep from "./Dep";
+import Dep from "./Dep.js";
 
 export default class Observer {
     constructor(data) {
