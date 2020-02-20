@@ -13,30 +13,36 @@ export default class Yui {
 
     _parseDom(node, parent) {
         let p = parent || document.createDocumentFragment();
-        let child;
-        while ((child = node.firstChild)) {
-            this._compile(child);
-            p.appendChild(child);
-            if (child.firstChild) {
-                this._parseDom(child, p);
+        Array.from(node.childNodes).forEach(node => {
+            this._compile(node);
+            if (node.childNodes && node.childNodes.length) {
+                this._parseDom(node, p)
             }
-        }
+        });
         return p;
     }
 
     _compile(node) {
         let reg = /\{\{(.*)\}\}/g;
         let that = this;
-        console.log('_compile',node);
+        console.log('_compile', node);
         if (node.nodeType === 1) {
             let attr = node.attributes;
             for (let i = 0; i < attr.length; i++) {
                 if (attr[i].nodeName === 'v-model') {
                     let keyName = attr[i].value;
-                    node.addEventListener('input', e => {
-                        that[keyName] = e.target.value;
-                    });
-                    node.value = that[keyName];
+                    let inputType = node.getAttribute('type');
+                    if (inputType === 'radio' || inputType === 'checkbox') {
+                        node.addEventListener('change', e => {
+                            that[keyName] = e.target.checked;
+                        });
+                        node.checked = that[keyName];
+                    } else {
+                        node.addEventListener('input', e => {
+                            that[keyName] = e.target.value;
+                        });
+                        node.value = that[keyName];
+                    }
                     node.removeAttribute('v-model');
                     new Watcher(that, node, keyName);
                 }
