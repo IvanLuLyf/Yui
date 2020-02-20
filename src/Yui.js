@@ -7,6 +7,7 @@ export default class Yui {
     constructor(options) {
         let data = options.data;
         this._observe(this, data);
+        this._compute(options.computed);
         let elem = document.querySelector(options.el);
         elem.append(this._parseDom(elem));
     }
@@ -98,5 +99,17 @@ export default class Yui {
                 this._observe(data[k], data[k])
             }
         });
+    }
+
+    _compute(computed) {
+        if (!computed) return;
+        let that = this;
+        this._computed = {};
+        Object.keys(computed).forEach(key => {
+            that[key] = computed[key].call(that);
+            new Watcher(that, key, val => {
+                that[key] = computed[key].call(that);
+            })
+        })
     }
 }

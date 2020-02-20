@@ -19,39 +19,46 @@
         .bcu.checkbox,
         .bcu.radio,
         .bcu.switch {
-            margin: 0.2rem 1.2rem 0.2rem 0.2rem;
+            margin: 0.2rem 0.2rem 0.2rem 0.2rem;
         }
 
         .txt-inline {
             display: inline-block;
             width: 200px;
-            margin: 0.2rem 1.2rem 0.2rem 0.2rem;
+            margin: 0.2rem 0.2rem 0.2rem 0.2rem;
         }
     </style>
 </head>
 <body>
 <div id="app">
-    <div class="input-group">Calc: {{ msg }} + {{ man.age }} + {{ o }}</div>
-    <div class="input-group">Calc: {{ msg }}</div>
-    <div class="input-group">Calc: {{ mwr }} {{ nb }}</div>
     <div class="input-group">
         <input type="text" class="bcu input" placeholder="default" v-model="msg">
     </div>
+    <div class="input-group">Message: {{ msg }}</div>
     <div class="input-group">
-        <input type="text" class="bcu input round" placeholder="default" v-model="msg">
+        <label class="txt-inline"><input type="text" class="bcu input round cherry" placeholder="a" v-model="a"></label>
+        +
+        <label class="txt-inline"><input type="text" class="bcu input round cherry" placeholder="b" v-model="b"></label>
+        =
+        <label class="txt-inline"><input type="text" class="bcu input round cherry" placeholder="sum" v-model="sum" readonly></label>
     </div>
+    <div class="input-group">Calc: {{ a }} + {{ b }} = {{ sum }}</div>
     <div class="input-group">
-        <div class="bcu switch default">
-            <input type="checkbox" id="sw000" v-model="o">
-            <label for="sw000">联动</label>
+        <div class="bcu switch pink">
+            <input type="checkbox" id="c1" v-model="o">
+            <label for="c1">联动</label>
         </div>
-        <div class="bcu checkbox default">
-            <input type="checkbox" id="sw001" v-model="o">
-            <label for="sw001">联动</label>
+        <div class="bcu checkbox mint">
+            <input type="checkbox" id="c2" v-model="o">
+            <label for="c2">联动</label>
         </div>
-        <div class="bcu checkbox default">
-            <input type="checkbox" id="sw002" v-model="o">
-            <label for="sw002">联动</label>
+        <div class="bcu checkbox round cocoa">
+            <input type="checkbox" id="c3" v-model="o">
+            <label for="c3">联动</label>
+        </div>
+        <div class="bcu checkbox rect coffee">
+            <input type="checkbox" id="c4" v-model="o">
+            <label for="c4">联动</label>
         </div>
     </div>
 </div>
@@ -63,10 +70,13 @@
         data: {
             msg: 'Hello World',
             o: false,
-            mwr:'Test',
-            man: {
-                name: "Test",
-                age: 20,
+            a: 0,
+            b: 0,
+            sum: 0,
+        },
+        computed: {
+            sum() {
+                return Number.parseFloat(this.a) + Number.parseFloat(this.b);
             }
         }
     });
