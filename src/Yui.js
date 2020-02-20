@@ -6,7 +6,7 @@ import Dep from "./Dep.js";
 export default class Yui {
     constructor(options) {
         let data = options.data;
-        this._observe(data);
+        this._observe(this, data);
         let elem = document.querySelector(options.el);
         elem.append(this._parseDom(elem));
     }
@@ -23,9 +23,8 @@ export default class Yui {
     }
 
     _compile(node) {
-        let reg = /\{\{(.*)\}\}/g;
+        let reg = /\{\{(.*?)\}\}/g;
         let that = this;
-        console.log('_compile', node);
         if (node.nodeType === 1) {
             let attr = node.attributes;
             for (let i = 0; i < attr.length; i++) {
@@ -44,21 +43,35 @@ export default class Yui {
                         node.value = that[keyName];
                     }
                     node.removeAttribute('v-model');
-                    new Watcher(that, node, keyName);
+                    new Watcher(that, keyName, v => {
+                        if (inputType === 'radio' || inputType === 'checkbox') {
+                            node.checked = that[keyName];
+                        } else {
+                            node.value = that[keyName];
+                        }
+                    });
                 }
             }
         } else if (node.nodeType === 3) {
-            if (reg.test(node.nodeValue)) {
+            let txt = node.nodeValue;
+            if (reg.test(txt)) {
                 let keyName = RegExp.$1;
                 keyName = keyName.trim();
-                new Watcher(that, node, keyName);
+                new Watcher(that, keyName, v => {
+                    node.nodeValue = txt.replace(reg, (matched, placeholder) => {
+                        return placeholder.trim().split('.').reduce((val, key) => {
+                            return val[key]
+                        }, that) + '';
+                    })
+                });
             }
         }
     }
 
-    _proxy(key, val) {
+    _proxy(target, key, val) {
         let dep = new Dep();
-        Object.defineProperty(this, key, {
+        let that = this;
+        Object.defineProperty(target, key, {
             get() {
                 if (Dep.global) {
                     dep.addSub(Dep.global);
@@ -66,7 +79,10 @@ export default class Yui {
                 return val;
             },
             set(newVal) {
-                if (val === newVal) {
+                if (typeof newVal === "object") {
+                    that._observe(newVal, newVal);
+                }
+                if (val === newVal && typeof newVal !== "object") {
                     return;
                 }
                 val = newVal;
@@ -75,9 +91,12 @@ export default class Yui {
         })
     }
 
-    _observe(data) {
+    _observe(target, data) {
         Object.keys(data).forEach(k => {
-            this._proxy(k, data[k]);
+            this._proxy(target, k, data[k]);
+            if (typeof data[k] === "object") {
+                this._observe(data[k], data[k])
+            }
         });
     }
 }

@@ -31,7 +31,9 @@
 </head>
 <body>
 <div id="app">
+    <div class="input-group">Calc: {{ msg }} + {{ man.age }} + {{ o }}</div>
     <div class="input-group">Calc: {{ msg }}</div>
+    <div class="input-group">Calc: {{ mwr }} {{ nb }}</div>
     <div class="input-group">
         <input type="text" class="bcu input" placeholder="default" v-model="msg">
     </div>
@@ -60,7 +62,12 @@
         el: '#app',
         data: {
             msg: 'Hello World',
-            o: true,
+            o: false,
+            mwr:'Test',
+            man: {
+                name: "Test",
+                age: 20,
+            }
         }
     });
 </script>

@@ -3,32 +3,25 @@
 import Dep from "./Dep.js";
 
 export default class Watcher {
-    constructor(yui, node, key) {
+    constructor(yui, key, fn) {
         Dep.global = this;
         this.key = key;
-        this.node = node;
         this.yui = yui;
+        this.fn = fn;
         this.update();
         Dep.global = null;
     }
 
     get value() {
-        return this.yui[this.key];
+        let arr = this.key.split('.');
+        let val = this.yui;
+        arr.forEach(key => {
+            val = val[key]
+        });
+        return val;
     }
 
     update() {
-        switch (this.node.nodeType) {
-            case 1:
-                let inputType = this.node.getAttribute('type');
-                if (inputType === 'radio' || inputType === 'checkbox') {
-                    this.node.checked = this.value;
-                } else {
-                    this.node.value = this.value;
-                }
-                break;
-            case 3:
-                this.node.nodeValue = this.value;
-                break;
-        }
+        this.fn(this.value);
     }
 }
