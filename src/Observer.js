@@ -5,7 +5,7 @@ import Dep from "./Dep.js";
 export default class Observer {
     constructor(data) {
         this.data = data;
-        this._proxy(data);
+        this._observe(data);
     }
 
     _proxy(key, val) {

@@ -40,7 +40,8 @@
         +
         <label class="txt-inline"><input type="text" class="bcu input round cherry" placeholder="b" v-model="b"></label>
         =
-        <label class="txt-inline"><input type="text" class="bcu input round cherry" placeholder="sum" v-model="sum" readonly></label>
+        <label class="txt-inline"><input type="text" class="bcu input round cherry" placeholder="sum" v-model="sum"
+                                         readonly></label>
     </div>
     <div class="input-group">Calc: {{ a }} + {{ b }} = {{ sum }}</div>
     <div class="input-group">
@@ -76,7 +77,7 @@
         },
         computed: {
             sum() {
-                return Number.parseFloat(this.a) + Number.parseFloat(this.b);
+                return (Number.parseFloat(this.a) || 0) + (Number.parseFloat(this.b) || 0);
             }
         }
     });
