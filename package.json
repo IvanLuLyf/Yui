@@ -1,12 +1,12 @@
 {
   "name": "yuijs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "a light MVVM JavaScript Library",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:browser": "webpack"
+    "build:browser": "webpack --mode=production"
   },
+  "type": "module",
   "devDependencies": {
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
