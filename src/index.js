@@ -1,11 +1,9 @@
 'use strict';
 
-import Yui from "./yui.js";
+import Yui from "./Yui.js";
 
 if (!globalThis.Yui) {
     globalThis.Yui = Yui;
 }
 
-export default {
-    Yui: Yui
-}
+export {Yui}
