@@ -1,6 +1,6 @@
 {
   "name": "yuijs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "a light MVVM JavaScript Library",
   "main": "src/index.js",
   "scripts": {
