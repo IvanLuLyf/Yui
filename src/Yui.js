@@ -4,26 +4,29 @@ import Watcher from "./Watcher.js";
 import Dep from "./Dep.js";
 
 export default class Yui {
+    #options = {}
+
     constructor(options) {
+        this.#options = options;
         let data = options.data;
-        this._observe(this, data);
-        this._compute(options.computed);
+        this.#observe(this, data);
+        this.#compute(options.computed);
         let elem = document.querySelector(options.el);
-        elem.append(this._parseDom(elem));
+        elem.append(this.#parseDom(elem));
     }
 
-    _parseDom(node, parent) {
+    #parseDom(node, parent) {
         let p = parent || document.createDocumentFragment();
         Array.from(node.childNodes).forEach(node => {
-            this._compile(node);
+            this.#compile(node);
             if (node.childNodes && node.childNodes.length) {
-                this._parseDom(node, p)
+                this.#parseDom(node, p)
             }
         });
         return p;
     }
 
-    _compile(node) {
+    #compile(node) {
         let reg = /\{\{(.*?)\}\}/g;
         let that = this;
         if (node.nodeType === 1) {
@@ -69,7 +72,7 @@ export default class Yui {
         }
     }
 
-    _proxy(target, key, val) {
+    #proxy(target, key, val) {
         let dep = new Dep();
         let that = this;
         Object.defineProperty(target, key, {
@@ -81,7 +84,7 @@ export default class Yui {
             },
             set(newVal) {
                 if (typeof newVal === "object") {
-                    that._observe(newVal, newVal);
+                    that.#observe(newVal, newVal);
                 }
                 if (val === newVal && typeof newVal !== "object") {
                     return;
@@ -92,16 +95,16 @@ export default class Yui {
         })
     }
 
-    _observe(target, data) {
+    #observe(target, data) {
         Object.keys(data).forEach(k => {
-            this._proxy(target, k, data[k]);
+            this.#proxy(target, k, data[k]);
             if (typeof data[k] === "object") {
-                this._observe(data[k], data[k])
+                this.#observe(data[k], data[k])
             }
         });
     }
 
-    _compute(computed) {
+    #compute(computed) {
         if (!computed) return;
         let that = this;
         this._computed = {};

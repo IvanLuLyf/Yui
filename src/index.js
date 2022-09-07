@@ -2,8 +2,8 @@
 
 import Yui from "./yui.js";
 
-if (!global.Yui) {
-    global.Yui = Yui;
+if (!globalThis.Yui) {
+    globalThis.Yui = Yui;
 }
 
 export default {

@@ -36,34 +36,40 @@
     </div>
     <div class="input-group">Message: {{ msg }}</div>
     <div class="input-group">
-        <label class="txt-inline"><input type="text" class="bcu input round cherry" placeholder="a" v-model="a"></label>
+        <label class="txt-inline">
+            <input type="text" class="bcu input round cherry" placeholder="a" v-model="a">
+        </label>
         +
-        <label class="txt-inline"><input type="text" class="bcu input round purple" placeholder="b" v-model="b"></label>
+        <label class="txt-inline">
+            <input type="text" class="bcu input round purple" placeholder="b" v-model="b">
+        </label>
         =
-        <label class="txt-inline"><input type="text" class="bcu input round blue" placeholder="sum" v-model="sum" readonly></label>
+        <label class="txt-inline">
+            <input type="text" class="bcu input round blue" placeholder="sum" v-model="sum" readonly>
+        </label>
     </div>
     <div class="input-group">Calc: {{ a }} + {{ b }} = {{ sum }}</div>
     <div class="input-group">
-        <div class="bcu switch pink">
+        <label class="bcu switch pink">
             <input type="checkbox" id="c1" v-model="o">
-            <label for="c1">联动</label>
-        </div>
-        <div class="bcu switch slim orange">
+            <span class="bcu-handler">联动</span>
+        </label>
+        <label class="bcu switch pink slim">
+            <input type="checkbox" id="c11" v-model="o">
+            <span class="bcu-handler">联动</span>
+        </label>
+        <label class="bcu checkbox mint">
             <input type="checkbox" id="c2" v-model="o">
-            <label for="c2">联动</label>
-        </div>
-        <div class="bcu checkbox round cocoa">
+            <span class="bcu-handler">联动</span>
+        </label>
+        <label class="bcu checkbox round cocoa">
             <input type="checkbox" id="c3" v-model="o">
-            <label for="c3">联动</label>
-        </div>
-        <div class="bcu checkbox rect coffee">
+            <span class="bcu-handler">联动</span>
+        </label>
+        <label class="bcu checkbox rect coffee">
             <input type="checkbox" id="c4" v-model="o">
-            <label for="c4">联动</label>
-        </div>
-        <div class="bcu checkbox mint">
-            <input type="checkbox" id="c5" v-model="o">
-            <label for="c5">联动</label>
-        </div>
+            <span class="bcu-handler">联动</span>
+        </label>
     </div>
 </div>
 <script type="module">
@@ -80,7 +86,7 @@
         },
         computed: {
             sum() {
-                return (Number.parseFloat(this.a) || 0) + (Number.parseFloat(this.b) || 0);
+                return (+this.a || 0) + (+this.b || 0);
             }
         }
     });
